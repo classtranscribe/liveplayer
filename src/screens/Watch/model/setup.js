@@ -1,10 +1,9 @@
 import _ from 'lodash';
 import { isSafari, isIPad13, isIPhone13 } from 'react-device-detect';
-import { api, links, uurl } from 'utils';
 
 
 export default {
-    media_: api.parseMedia(),
+    media_: null,
     playlist_: {},
     playlists_: {},
     externalFunctions: {},
@@ -41,40 +40,14 @@ export default {
 
 
     async getPlaylist(playlistId) {
-        // let { state } = this.externalFunctions.location
-        // if (state && state.playlist) return state.playlist
-        try {
-            const { data } = await api.getPlaylistById(playlistId);
-            // _.reverse(data.medias || [])
-            return data;
-        } catch (error) {
-            return null;
-        }
+        return false;
     },
 
     async getPlaylists(offeringId) {
-        // // if the playlists exist
-        // if (this.playlists().length > 0) return null
-
-        // let { state } = this.externalFunctions.location
-        // if (state && state.playlists) return state.playlists
-
-        try {
-            const { data } = await api.getPlaylistsByOfferingId(offeringId);
-            return data;
-        } catch (error) {
-            return [];
-        }
+        return false;
     },
 
     async getMediaWatchHistories(mediaId) {
-        try {
-            const { data } = await api.getMediaWatchHistories(mediaId);
-            console.error('getMediaWatchHistories', data);
-            return data;
-        } catch (error) {
-            console.error('Failed to get watch histories.');
-            return {};
-        }
+        return false;
     },
 };

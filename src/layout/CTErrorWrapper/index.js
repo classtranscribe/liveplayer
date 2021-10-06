@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Link } from 'dva/router';
 import Button from '@material-ui/core/Button';
 import { user, links } from 'utils';
-import CTNavHeader from '../CTNavHeader';
 import { useButtonStyles } from '../CTButtons';
 import './index.scss';
 
@@ -30,7 +29,6 @@ function CTErrorWrapper(props) {
 
   return show ? (
     <div className={wrapperClasses}>
-      {navbar && <CTNavHeader fixed />}
       <div className="ct-ew-body">
         <div className="ct-ew-info">
           <div className="ct-ew-code">{code}</div>

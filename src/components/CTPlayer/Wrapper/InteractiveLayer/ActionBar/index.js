@@ -30,9 +30,6 @@ function ActionBar(props) {
   };
 
   let displayedTitle = mediaName || 'Untitled Media';
-  if (api.isError(error)) {
-    displayedTitle = 'Media Unavailable';
-  }
 
   return (
     <div className="ctp action-bar">

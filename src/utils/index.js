@@ -8,12 +8,9 @@ import { v4 as uuid } from 'uuid';
 // export const logger = loggerToExport;
 export const user = {}
 export { env } from './env';
-export { api } from './cthttp';
 export { CTPrompt, prompt } from './prompt';
-export { CTPreference, CTPreferenceV2 } from './user-preference';
 export { elem } from './use-elem';
 export { uurl } from './use-url';
-export { uemail } from './use-email';
 export { links } from './links';
 export { default as timestr } from './use-time';
 export { default as CTError, InvalidDataError } from './use-error';

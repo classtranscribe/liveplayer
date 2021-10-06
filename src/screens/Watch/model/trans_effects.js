@@ -1,5 +1,3 @@
-
-import { api } from 'utils';
 import _ from 'lodash';
 import { isMobile } from 'react-device-detect';
 import {
@@ -51,8 +49,8 @@ const findCurrent = (array = [], prev = {}, now = 0, deterFunc) => {
 export default {
     *setCurrTrans({ payload: tran }, { call, put, select, take }) {
         // Get and set corresponding captions
-        const { data = [] } = yield call(api.getCaptionsByTranscriptionId, tran.id);
-        yield put.resolve({ type: 'setCaptions', payload: data });
+        // const { data = [] } = yield call(api.getCaptionsByTranscriptionId, tran.id);
+        // yield put.resolve({ type: 'setCaptions', payload: data });
         const descriptions = []; // adSample // need to modify
         yield put.resolve({ type: 'setDescriptions', payload: descriptions });
         yield put({ type: 'setTranscript' });
@@ -137,7 +135,7 @@ export default {
         // this.currEditing_.text = text; ?
         yield put({ type: 'setCurrEditing', payload: null });
         try {
-            yield call(api.updateCaptionLine, { id, text });
+            // yield call(api.updateCaptionLine, { id, text });
             yield put({ type: 'setCaptions', payload: watch.captions });
             promptControl.savedCaption();
         } catch (error) {

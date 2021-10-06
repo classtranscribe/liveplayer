@@ -51,7 +51,7 @@ jobs:
           GITSHA1: ${{ github.sha  }}
         with:
           registry: docker.pkg.github.com
-          name: ${{ github.repository_owner }}/${{ github.event.repository.name }}/frontend
+          name: ${{ github.repository_owner }}/${{ github.event.repository.name }}/frontendbot
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           tags: "${{ env.TAGS }}"

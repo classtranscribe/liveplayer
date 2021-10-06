@@ -4,7 +4,6 @@ import { connect } from 'dva';
 // import fileDownload from 'js-file-download';
 import {Menu, MenuItem} from '@material-ui/core';
 import { MENU_DOWNLOAD } from 'screens/Watch/Utils/constants.util'
-// import { CTDropdown } from 'layout'; // TODO: Change the Menu to use this
 
 function LiveTranscriptDownloadWithRedux(props) {
     const {media, transcript, menu, dispatch} = props;
@@ -118,14 +117,6 @@ function LiveTranscriptDownloadWithRedux(props) {
           <MenuItem onClick={downloadVtt}>VTT</MenuItem>
           <MenuItem onClick={downloadText}>Text</MenuItem>
         </Menu>
-        {/* <CTDropdown 
-          id="live-transcript-download-dropdown"
-          anchorRef={anchorRef}
-          open={shouldDisplayMenu}
-          onClose={closeMenu}
-          onChange={handleChange}
-          downloadOptions={downloadOptions}
-        /> */}
       </div>
     );
 }

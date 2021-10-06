@@ -8,7 +8,6 @@ import {
   RewindButton,
   ForwardButton,
   SettingButton,
-  NextVideoButton,
   FullscreenButton,
   SwitchScreenButton,
   PlaybackRateButton,
@@ -32,11 +31,8 @@ export function ControlBarWithRedux(props) {
     <div id="watch-ctrl-bar" className="watch-ctrl-bar-container">
       <ProgressBar />
       <div className="watch-ctrl-bar-left-elems">
-        {isMobile ? <RewindButton /> : <NextVideoButton nextBtn={false} />}
 
         <PlayButton dispatch={dispatch} />
-
-        {isMobile ? <ForwardButton /> : <NextVideoButton />}
 
         {isTwoScreen && <SwitchScreenButton />}
 
@@ -44,9 +40,6 @@ export function ControlBarWithRedux(props) {
         <TimeDisplay />
       </div>
       <div className="watch-ctrl-bar-right-elems">
-        {isMobile && <NextVideoButton nextBtn={false} />}
-        {isMobile && <NextVideoButton />}
-
         <PlaybackRateButton />
         <ClosedCaptionButton />
         <AudioDescriptionButton />

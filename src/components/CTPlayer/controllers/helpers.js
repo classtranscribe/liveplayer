@@ -1,6 +1,6 @@
 import timestr from 'utils/use-time';
 // import downloadFile from 'js-file-download';
-import { api, uurl, prompt, _copyTextToClipboard, _readFileAsBinary } from 'utils';
+import { uurl, prompt, _copyTextToClipboard, _readFileAsBinary } from 'utils';
 
 /**
  * Function used to get the size for the player
@@ -114,8 +114,9 @@ export async function _decodeScreenshotPath(path) {
 export async function _createImage(imgBlob, sourceType, sourceId) {
   try {
     const imageFile = new File([imgBlob], 'screenshot.jpg', { type: 'image/jpg' });
-    const { data } = await api.createImage(imageFile, sourceType, sourceId);
-    return data;
+    // NOT IMPLEMENTED
+    // const { data } = await api.createImage(imageFile, sourceType, sourceId);
+    return {} // data;
   } catch (error) {
     console.error(error);
     prompt.error('Failed to create the image.');

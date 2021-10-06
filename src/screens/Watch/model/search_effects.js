@@ -1,4 +1,4 @@
-import { api, elem } from 'utils';
+import { elem } from 'utils';
 import _ from 'lodash';
 import {
   ARRAY_INIT,
@@ -33,16 +33,7 @@ function getShortcutResults(value) {
 }
 // Function used to get search results from videos in current offering
 const getPlaylistResults = async (value, playlist) => {
-  const { offeringId } = playlist;
-  if (!offeringId) return [];
-
-  try {
-    const { data } = await api.searchForMedia(offeringId, value);
-    return data;
-  } catch (error) {
-    console.error(error, 'Failed to get media results');
-    return [];
-  }
+  
 }
 // Function used to add <span> tag around the searched value in a text
 function highlightSearchedWords(results = [], value = '', key = 'text') {
@@ -54,16 +45,7 @@ function getInVideoTransSearchResults(value, watch) {
 }
 // Function used to get search results from captions in current offering
 async function getInCourseTransSearchResults(value, playlist, lang) {
-  const { offeringId } = playlist;
-  if (!offeringId) return [];
-
-  try {
-    const { data } = await api.searchCaptionInOffering(offeringId, value, lang);
-    return data;
-  } catch (error) {
-    console.error('Failed to get in-course trans search results');
-    return [];
-  }
+  return false;
 }
 export default {
   *search_open({ payload }, { call, put, select, take }) {

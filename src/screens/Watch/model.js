@@ -1,5 +1,4 @@
 import { isSafari, isIPad13, isIPhone13, isMobile } from 'react-device-detect';
-import { api, user, prompt, InvalidDataError, uurl } from 'utils';
 import _ from 'lodash';
 import { ARRAY_INIT, DEFAULT_ROLE } from 'utils/constants';
 import { timeStrToSec, colorMap } from './Utils/helpers';
@@ -614,94 +613,6 @@ const WatchModel = {
         },
     },
     effects: {
-        *setupMedia({ payload }, { call, put, select, take }) {
-            // Get media
-            yield put.resolve({ type: 'changeVideo', payload: { media: {} } })
-            const { id } = uurl.useSearch();
-            let media = null;
-            try {
-                const { data } = yield call(api.getMediaById, id);
-                media = api.parseMedia(data);
-            } catch (error) {
-                if (api.parseError(error).status === 404) {
-                    yield put({ type: 'setError', payload: ERR_INVALID_MEDIA_ID });
-                } else {
-                    yield put({ type: 'setError', payload: ERR_AUTH });
-                }
-                return null;
-            }
-            PlayerData.param = {};
-            yield put({ type: 'setMedia', payload: media })
-            yield put({ type: 'setMenu', payload: MENU_HIDE })
-            // Set transcriptions
-
-            const { transcriptions } = media;
-            // setTranscriptions
-            yield put({ type: 'setTranscriptions', payload: transcriptions })
-
-            // Get Playlist
-            const { playlistId } = media;
-            const playlist = yield call(setup.getPlaylist, playlistId);
-            if (!playlist) {
-                promptControl.error('playlist');
-                api.contentLoaded();
-                return;
-            }
-            // Set data
-            yield put({ type: 'setPlaylist', payload: playlist })
-
-            const { offeringId } = playlist;
-            let { data: offering } = yield call(api.getOfferingById, offeringId);
-            offering = api.parseSingleOffering(offering);
-            yield put({ type: 'setOffering', payload: offering })
-            // register the ids to the user event controller
-            // uEvent.registerIds(media.id, offeringId);
-            // send select video event
-            // uEvent.selectvideo(media.id);
-
-            api.contentLoaded();
-
-            // Get playlists
-            const playlists = yield call(setup.getPlaylists, offeringId);
-            if (playlists) {
-                yield put({ type: 'setPlaylists', payload: playlists })
-            }
-            if (isSafari && isIPad13 && isIPhone13) {
-                promptControl.videoNotLoading();
-            }
-            try {
-                let { data } = yield call(api.getUserWatchHistories)
-                yield put({ type: 'setWatchHistories', payload: data.filter(media_ => media_?.id) })
-            } catch (error) {
-                prompt.addOne({ text: "Couldn't load watch histories.", status: 'error' });
-            }
-        },
-        *setupEmbeddedMedia({ payload }, { call, put, select, take }) {
-            const { mediaId, ...props } = payload;
-            let media = payload.media;
-            if (!media) {
-                if (mediaId) {
-                    try {
-                        const { data } = yield call(api.getMediaById, mediaId);
-                        media = api.parseMedia(data);
-                    } catch (error) {
-                        if (api.parseError(error).status === 404) {
-                            yield put({ type: 'setError', payload: ERR_INVALID_MEDIA_ID });
-                        } else {
-                            yield put({ type: 'setError', payload: ERR_AUTH });
-                        }
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-            const transcriptions = media.transcriptions;
-            delete props.media
-            // delete media.transcriptions;
-            yield put({ type: 'setEmbeddedMedia', payload: { media, ...props } })
-            yield put({ type: 'setTranscriptions', payload: transcriptions })
-        },
         ...player_effects,
         ...menu_effects,
         ...trans_effects,

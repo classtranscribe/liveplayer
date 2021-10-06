@@ -1,4 +1,4 @@
-# ClassTranscribe Front-End
+# ClassTranscribe Front-End Liveplauer
 
 The React.js Frontend for ClassTranscribe
 

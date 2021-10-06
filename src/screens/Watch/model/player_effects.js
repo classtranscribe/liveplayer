@@ -1,5 +1,5 @@
 import { isMobile } from 'react-device-detect';
-import { api,  prompt, InvalidDataError, uurl, links, timestr } from 'utils';
+import { uurl, links, timestr } from 'utils';
 import PlayerData from '../player'
 // import { uEvent } from '../Utils/UserEventController';
 import {
@@ -259,10 +259,6 @@ export default {
     *sendMediaHistories({ payload }, { call, put, select, take }) {
         const { watch } = yield select();
         const { id } = watch.media
-        if (id && user.isLoggedIn) {
-            yield call(api.sendMediaWatchHistories,
-                id, watch.time, (watch.time / watch.duration) * 100);
-        }
     },
     *setWatchMode({ payload: { mode, config = {} } }, { call, put, select, take }) {
         const { sendUserAction = true, restore = false } = config;
