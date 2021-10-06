@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Public", 
+    "description": "Course contents are visible to all users",
+    "id": 0
+  },
+  {
+    "name": "Authenticated Only", 
+    "description": "Course contents are visible to logged-in users",
+    "id": 1
+  },
+  {
+    "name": "Students Only", 
+    "description": "Course contents are visible to students taking the course",
+    "id": 2
+  },
+  {
+    "name": "University Only", 
+    "description": "Course contents are visible to everyone from your university",
+    "id": 3
+  }
+]
