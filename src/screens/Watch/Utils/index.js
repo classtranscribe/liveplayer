@@ -26,7 +26,6 @@ export * from './constants.util';
 export * from './data';
 export * from './helpers';
 
-export { generateWatchUserGuide } from './user-guide';
 export { keydownControl } from './keydown.control';
 export { transControl } from './trans.control';
 export { promptControl } from './prompt.control';

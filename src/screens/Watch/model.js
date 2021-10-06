@@ -613,6 +613,15 @@ const WatchModel = {
         },
     },
     effects: {
+        *setupEmbeddedMedia({ payload }, { call, put, select, take }) {
+            const { mediaId, ...props } = payload;
+            let media = payload.media;
+            const transcriptions = media.transcriptions;
+            delete props.media
+            // delete media.transcriptions;
+            yield put({ type: 'setEmbeddedMedia', payload: { media, ...props } })
+            yield put({ type: 'setTranscriptions', payload: transcriptions })
+        },
         ...player_effects,
         ...menu_effects,
         ...trans_effects,
