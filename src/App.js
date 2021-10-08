@@ -15,7 +15,7 @@ class App extends React.Component {
       <Switch>
         <Route path="/404" component={NotFound404} />
         <Route path="/liveplayer" component={LiveHLSPlayer} />
-        <Route component={NotFound404} />
+        <Route component={LiveHLSPlayer} />
       </Switch>
     );
   }
