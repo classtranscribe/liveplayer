@@ -1,5 +1,5 @@
 import timestr from 'utils/use-time';
-// import downloadFile from 'js-file-download';
+import downloadFile from 'js-file-download';
 import { uurl, prompt, _copyTextToClipboard, _readFileAsBinary } from 'utils';
 
 /**
@@ -94,7 +94,7 @@ export function _captureVideoImage(videoNode, callback) {
 }
 
 export function _downloadScreenshotByBlob(imgBlob, time, mediaName) {
-  // downloadFile(imgBlob, `(${timestr.toTimeString(time)}) - ${mediaName}.jpg`);
+  downloadFile(imgBlob, `(${timestr.toTimeString(time)}) - ${mediaName}.jpg`);
 }
 
 export function _encodeScreenshotPath(imgData) {

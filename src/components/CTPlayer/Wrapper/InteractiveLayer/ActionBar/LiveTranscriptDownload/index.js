@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import WatchCtrlButton from 'screens/Watch/Components/WatchCtrlButton'
 import { connect } from 'dva';
-// import fileDownload from 'js-file-download';
+import fileDownload from 'js-file-download';
 import {Menu, MenuItem} from '@material-ui/core';
 import { MENU_DOWNLOAD } from 'screens/Watch/Utils/constants.util'
 
@@ -55,7 +55,7 @@ function LiveTranscriptDownloadWithRedux(props) {
         }
         const [transcriptFile, ext] = args;
         const fileName = `${generateFileName(media.mediaName)}.${ext}`;
-        // fileDownload(transcriptFile, fileName);
+        fileDownload(transcriptFile, fileName);
     }
 
     // const handleChange = (value) => {
