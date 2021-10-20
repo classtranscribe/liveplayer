@@ -57,7 +57,7 @@ jobs:
           ssh-add - <<< "${DEPLOY_KEY}"
           git clone git@github.com:classtranscribe/classtranscribe.github.io.git
           git config --global user.email "zhenyum3@illinois.edu"
-          git config --global user.name "Gitbot"
+          git config --global user.name "CT-Gitbot"
           cd classtranscribe.github.io
           ls -la
           export SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`
@@ -65,7 +65,7 @@ jobs:
           mv ../build/* "static/v-${SHORT_SHA}/"
           echo "var currentVersion = '${SHORT_SHA}'" > config.js
           git add "static/v-${SHORT_SHA}/*" config.js
-          git commit -m "Commit Deploy: ${SHORT_SHA}"
+          git commit -m "Commit Prod Deploy: ${SHORT_SHA}"
           git push origin main
       - name: Deploy to Staging Production
         if: github.ref == 'refs/heads/staging'
@@ -78,7 +78,7 @@ jobs:
           ssh-add - <<< "${DEPLOY_KEY}"
           git clone git@github.com:classtranscribe/classtranscribe.github.io.git
           git config --global user.email "zhenyum3@illinois.edu"
-          git config --global user.name "Gitbot"
+          git config --global user.name "CT-Gitbot"
           cd classtranscribe.github.io
           ls -la
           export SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`

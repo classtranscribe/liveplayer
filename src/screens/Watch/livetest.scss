@@ -1,0 +1,107 @@
+.watch-bg {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background: var(--watch-page-bg-color);
+    color: white;
+}
+.liveplay-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.player-n-trans {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .main-player,
+    .ct-player-con,
+    .ct-player {
+        width: 100%;
+        height: 100%;
+    }
+    #watch-trans-container-web {
+        display: flex;
+        flex: 0 0 33%;
+    }
+}
+.ct-player {
+    position: relative;
+}
+
+/**
+ * z-index of the components in watch page
+ *
+ * 0    - Transcription
+ * 1    - Primary player & Closed Caption
+ * 2    - Secondary player & Secondary Player Wrapper/Overlays
+ * 4    - Prompts
+ * 5    - Menus
+ * 1020 - Control bar
+ * 1020 - Header
+ * 1021 - Search
+ * 1021 - Tab Event Helper Buttons
+ * 1030 - Modals
+ */
+
+/* Transcription Area */
+.watch-trans-container {
+    z-index: 2;
+}
+
+/* Header z-index: 1020 */
+
+/* Contol bar */
+.watch-ctrl-bar-container {
+    z-index: 1020;
+}
+
+/* Players */
+.ct-player-primary {
+    z-index: 1;
+}
+.ct-player-secondary {
+    z-index: 2;
+}
+
+/* Menu */
+.watch-menus {
+    z-index: 5;
+}
+
+/* Modal */
+.watch-modal {
+    z-index: 1030;
+}
+
+/* Search */
+.watch-search {
+    z-index: 1021;
+}
+
+/* Overlays */
+
+/* Tab Event Helper Buttons */
+.watch-tab-helper {
+    z-index: 1021;
+}
+/* Closed Caption */
+.watch-player-wrapper {
+    z-index: 1;
+}
+
+/* Secondary Player Wrapper/Overlays */
+.watch-secondary-wrapper {
+    z-index: 2;
+}
+
+/* Prompts */
+.watch-prompt,
+.trans-ctrl-btn {
+    z-index: 4;
+}

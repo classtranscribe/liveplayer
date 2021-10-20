@@ -1,5 +1,4 @@
 @mixin watch-trans-container {
-  position: fixed;
   // left: 62vw;
   // top: 5em !important;
   // top: 0;
@@ -14,10 +13,8 @@
 
 .watch-trans-container-web {
   @include watch-trans-container;
+  width: 100%;
   height: 100%;
-  top: 0;
-  left: 62vw;
-  width: 38vw;
 }
 
 .watch-trans-container-mobile {
@@ -31,11 +28,10 @@
 
 
 .trans-box {
+  height: 0px;
   position: relative;
   width: calc(100% - 3vw);
   min-height: 100%;
-  padding-top: calc(50%);
-  padding-bottom: calc(50% + 5em);
 }
 .trans-list {
   position: relative;

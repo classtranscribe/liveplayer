@@ -76,21 +76,4 @@ $ct-player-extra-bg: rgb(231, 240, 239);
   }
 }
 
-.ctp.ct-player-con {
-  @extend %container;
-  height: 100vh;
-  width: 62vw;
-}
-
-.ctp.ct-player-con-fullscreen {
-  @extend %container;
-  height: 100%;
-  width: 100%;
-}
-
-.ctp.ct-player-con-mobile {
-  @extend %container;
-  height: 45vh;
-  width: 100vw;
-}
 

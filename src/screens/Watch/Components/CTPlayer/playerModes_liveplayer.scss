@@ -8,26 +8,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%
 }
 
 .ct-player-primary-web{
   @include ct-player-primary;
   left: 0;
-  width: 61vw;
-  height: calc(100% - 50px - 60px);
 }
 
 .ct-player-primary-mobile{
   @include ct-player-primary;
-  left:0;
-  //height: 40vh;
-  width: 100vw;
 }
 
 .ct-player-primary-mobile-landscape{
   @include ct-player-primary;
-  left:0;
-  width: 61vw;
 }
 
 .ct-player-secondary {

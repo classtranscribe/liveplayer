@@ -20,7 +20,7 @@ import {
     CTP_ERROR,
     // HIDE_TRANS,
 } from '../../Utils/constants.util';
-import { api, prompt, _getSelectOptions } from 'utils';
+import { api, prompt, _getSelectOptions, ARRAY_EMPTY } from 'utils';
 
 let hls;
 
@@ -194,14 +194,15 @@ const Video = React.memo((props) => {
                         case Hls.ErrorTypes.NETWORK_ERROR:
                             // try to recover network error
                             prompt.error('Network Error: Please Check your connection/ensure you have the correct link');
-
                             console.log('fatal network error encountered, try to recover');
-
+                            setCTPEvent(CTP_ERROR);
+                            dispatch({type: 'watch/setTranscript', payload: ARRAY_EMPTY})
                             hls.startLoad();
                             break;
                         case Hls.ErrorTypes.MEDIA_ERROR:
+                            setCTPEvent(CTP_ERROR);
+                            dispatch({type: 'watch/setTranscript', payload: ARRAY_EMPTY})
                             prompt.error('Media Error: Where working on getting things back online!');
-
                             console.log('fatal media error encountered, try to recover');
                             hls.recoverMediaError();
                             break;
@@ -234,7 +235,7 @@ const Video = React.memo((props) => {
             // const transcriptions = event.captions.map(cap => ({id: null, language: cap.lang, src: 'hm'}));
             // eslint-disable-next-line no-console
             // 
-            // dispatch({type: 'watch/setTranscriptions', payload: transcriptions})
+            // 
             // dispatch({type: 'watch/setCaptions', payload: [{}]})
             // }
             // });
