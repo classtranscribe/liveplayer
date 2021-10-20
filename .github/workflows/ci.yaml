@@ -46,9 +46,8 @@ jobs:
         env:
           CI: false
         run: yarn build
-      - name: Deploy Env Check
-        run: echo "todo Hi Env"
-      - name: Deploy
+      - name: Deploy to Stable Production
+        if: github.ref == 'refs/heads/master'
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
@@ -67,5 +66,26 @@ jobs:
           echo "var currentVersion = '${SHORT_SHA}'" > config.js
           git add "static/v-${SHORT_SHA}/*" config.js
           git commit -m "Commit Deploy: ${SHORT_SHA}"
+          git push origin main
+      - name: Deploy to Staging Production
+        if: github.ref == 'refs/heads/staging'
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+        run: |
+          ls -la
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${DEPLOY_KEY}"
+          git clone git@github.com:classtranscribe/classtranscribe.github.io.git
+          git config --global user.email "zhenyum3@illinois.edu"
+          git config --global user.name "Gitbot"
+          cd classtranscribe.github.io
+          ls -la
+          export SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`
+          mkdir -p "static/v-stg-${SHORT_SHA}"
+          mv ../build/* "static/v-stg-${SHORT_SHA}/"
+          echo "var currentVersion = '${SHORT_SHA}'" > config_staging.js
+          git add "static/v-stg-${SHORT_SHA}/*" config_staging.js
+          git commit -m "Commit Staging Deploy: ${SHORT_SHA}"
           git push origin main
     
