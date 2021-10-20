@@ -7,9 +7,9 @@
     "url": "git+ssh://github.com/classtranscribe/FrontEnd_BOT.git"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "lint": "cross-env NODE_ENV=production eslint .",
@@ -44,6 +44,7 @@
     "dva": "^2.4.1",
     "hls.js": "^1.0.2",
     "jquery": "^3.6.0",
+    "js-file-download": "^0.4.12",
     "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "pico-ui": "^0.0.13",
@@ -74,9 +75,10 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
+    "react-app-rewired": "^2.1.8",
     "lint-staged": "^10.2.4",
+    "node-sass": "^4.13.1",
     "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1",
-    "node-sass": "^4.13.1"
+    "pretty-quick": "^2.0.1"
   }
 }
