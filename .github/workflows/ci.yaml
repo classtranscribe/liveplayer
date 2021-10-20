@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
       - staging
       - expt
   pull_request:
@@ -47,7 +47,7 @@ jobs:
           CI: false
         run: yarn build
       - name: Deploy to Stable Production
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
@@ -63,8 +63,8 @@ jobs:
           export SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`
           mkdir -p "static/v-${SHORT_SHA}"
           mv ../build/* "static/v-${SHORT_SHA}/"
-          echo "var currentVersion = '${SHORT_SHA}'" > config.js
-          git add "static/v-${SHORT_SHA}/*" config.js
+          echo "var currentVersion = '${SHORT_SHA}'" > config_prod.js
+          git add "static/v-${SHORT_SHA}/*" config_prod.js
           git commit -m "Commit Prod Deploy: ${SHORT_SHA}"
           git push origin main
       - name: Deploy to Staging Production
