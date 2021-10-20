@@ -13,7 +13,6 @@ function CaptionLine({ isCurrent = false, isEditing = false,
   shouldHide = false, caption = {}, dispatch, fontSize }) {
   let { text, id, startTime, begin, kind = "web" } = caption;
   const ref = useRef();
-
   const blurFromInput = () => {
     if (ref && ref.current && typeof ref.current.blur === 'function') {
       if (document.activeElement.id === ref.current.id) {
@@ -103,7 +102,7 @@ function CaptionLine({ isCurrent = false, isEditing = false,
         ) : (
           <div
             ref={ref}
-            contentEditable={!isMobile}
+            contentEditable={!isMobile && kind !== 'vtt'}
             id={`caption-line-textarea-${id}`}
             className={`caption-line-text-${fontSize}`}
             dangerouslySetInnerHTML={{ __html: text }}

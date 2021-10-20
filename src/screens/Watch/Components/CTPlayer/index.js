@@ -69,11 +69,10 @@ const ClassTranscribePlayerNew = (props) => {
         toCopy.startTime = event.currentTarget.cues[z].startTime;
         toCopy.endTime = event.currentTarget.cues[z].endTime;
         toCopy.text = event.currentTarget.cues[z].text;
+        toCopy.kind = 'vtt'
         toLog.push(toCopy)
     }
-
-    // 
- 
+    
     // const prev = undefined;
     if (event.currentTarget.activeCues[0] !== undefined) {
         let curr = event.currentTarget.activeCues[0];
