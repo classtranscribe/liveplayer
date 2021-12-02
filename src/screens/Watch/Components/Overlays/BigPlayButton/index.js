@@ -51,7 +51,9 @@ function BigPlayButtonWithRedux(props) {
         <div className="sk-chase-dot" />
       </div>
     </div>;
-  } else if (pauseStatus === PS_PAUSE) {
+  }
+  /* 
+  else if (pauseStatus === PS_PAUSE) {
     bpb_container = <button
       data-show-and-fade
       id="wbpb-pause"
@@ -63,6 +65,7 @@ function BigPlayButtonWithRedux(props) {
         <i className="material-icons">pause</i>
       </span>
     </button>;
+    bpb_container = null;
   } else if (pauseStatus === PS_PLAY) {
     bpb_container = <div
       data-show-and-fade
@@ -75,6 +78,13 @@ function BigPlayButtonWithRedux(props) {
         <i className="material-icons">play_arrow</i>
       </span>
     </div>;
+    bpb_container = null;
+  } */ else if (paused) {
+    bpb_container = <div><span className="big-play-button-content" tabIndex="-1">
+      <div className="paused-bbp">
+        <i className="material-icons">play_arrow</i>
+      </div>
+    </span></div>
   }
   return (
     <div className="wbp-btn-container" paused={paused.toString()} aria-hidden="true">

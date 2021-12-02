@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'dva'
 import cx from 'classnames';
 import './index.scss';
 import ActionBar from './ActionBar';
@@ -11,7 +12,8 @@ function InteractiveLayer(props) {
     userActive,
     isEnded,
     isPaused,
-    screenshotActionElement
+    screenshotActionElement,
+    dispatch
   } = props;
 
   const [openSettings, setOpenSettings] = useState(false);
@@ -19,7 +21,11 @@ function InteractiveLayer(props) {
   const handleOpenSettings = () => {
     setOpenSettings(true);
   }
-  const handleCloseSettings = () => setOpenSettings(false);
+  const handleCloseSettings = () => {
+    dispatch({ type: 'watch/menu_close' });
+    
+    setOpenSettings(false)
+  };
 
   const wrapperClasses = cx('ctp', 'wrapper', 'interact', {
     show: userActive || isPaused || isEnded || openSettings, // NOT IMPLEMENTED, TEMP
@@ -45,7 +51,7 @@ function InteractiveLayer(props) {
           <div className="ctp ctrl-bar-con">
             <ControlBar />
           </div>
-          <SettingsMenu 
+          <SettingsMenu
             onClose={handleCloseSettings}
           />
         </>
@@ -54,5 +60,5 @@ function InteractiveLayer(props) {
   );
 }
 
-export default InteractiveLayer;
+export default connect()(InteractiveLayer);
 

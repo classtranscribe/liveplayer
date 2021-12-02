@@ -45,7 +45,7 @@ function RootMenu(props) {
         active
         isSubMenu
         text="Caption Language"
-        current={englishTrack.language}
+        current={englishTrack?.language}
         onClick={onOpenLiveTextTrackSelection}
       />
 

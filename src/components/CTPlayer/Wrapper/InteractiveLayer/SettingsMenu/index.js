@@ -44,6 +44,7 @@ function SettingsMenu(props) {
     setMenuType('root');
   }, [open]);
 
+
   let menuElement = null;
   let menuProps = {};
 
