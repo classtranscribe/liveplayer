@@ -320,77 +320,28 @@ const Video = React.memo((props) => {
             if (textTrack === null || textTrack.length === 0) {
                 return;
             }
+            let tracks = Array.from(textTrack);
             // 
             // 
 
-            // const englishTrack = textTrack
-            let englishTrack;
-            for (var l = 0; l < Array.from(textTrack).length; l++) {
-                Array.from(textTrack)[l].mode = 'disabled';
+            
+            for (var l = 0; l < tracks.length; l++) {
+                tracks[l].mode = 'disabled';
             }
-            dispatch({ type: 'watch/setTextTracks', payload: Array.from(textTrack) });
+            dispatch({ type: 'watch/setTextTracks', payload: tracks });
 
-            const possibleEnglishTracks = Array.from(textTrack).filter(track => track.language.toLowerCase().startsWith("en"));
-            if (possibleEnglishTracks.length > 0) {
-                englishTrack = possibleEnglishTracks[0];
-            } else {
-                englishTrack = textTrack[0];
-            }
-            for (var i = 0; i < Array.from(textTrack).length; i += 1) {
-                if (Array.from(textTrack)[i].language === englishTrack.language) {
-                    dispatch({ type: "watch/setEnglishTrack", payload: i });
-                    Array.from(textTrack)[i].mode = "showing";
-
-
+            let foundCaptions = false;
+            for (var i = 0; i < tracks.length; i += 1) {
+                if(  tracks[i].language.toLowerCase().startsWith("en") 
+                || i == tracks.length -1) {
+                    if(! foundCaptions) {
+                        dispatch({ type: "watch/setEnglishTrack", payload: i });
+                        tracks[i].mode = "showing";
+                        foundCaptions = true;
+                    }
+                    dispatch({ type: "watch/setDescriptionTrack", payload: i });
                 }
             }
-            //dispatch({type: "watch/setEnglishTrack", payload: englishTrack});
-            //console.log(englishTrack)
-            // englishTrack.addEventListener("cuechange", (event) => {
-
-            //     // 
-            //     const toLog = [];
-            //     for (let z = 0; z < event.currentTarget.cues.length; z++) {
-            //         let toCopy = JSON.parse(JSON.stringify(event.currentTarget.cues[z]));
-            //         toCopy.startTime = event.currentTarget.cues[z].startTime;
-            //         toCopy.endTime = event.currentTarget.cues[z].endTime;
-            //         toCopy.text = event.currentTarget.cues[z].text;
-            //         toLog.push(Object.freeze(toCopy))
-            //     }
-
-            //     // 
-
-            //     // const prev = undefined;
-            //     if (event.currentTarget.activeCues[0] !== undefined) {
-            //         idR += 1
-            //         let curr = event.currentTarget.activeCues[0];
-            //         if (Math.abs(curr.startTime - curr.endTime) > 20) {
-            //             curr = event.currentTarget.activeCues[1];
-            //         }
-
-            //         let toCopy = JSON.parse(JSON.stringify(curr));
-            //         toCopy.startTime = curr.startTime;
-            //         toCopy.endTime = curr.endTime;
-            //         toCopy.text = curr.text;
-
-
-            //         if (yolo <= 2) {
-            //             // transcript.push(f)
-            //             // y
-            //             dispatch({ type: 'watch/setTranscript', payload:  toLog})
-
-
-            //             dispatch({ type: 'watch/setCurrCaption', payload:  Object.freeze( toCopy)})
-
-            //             // splitter(toLog)
-            //             yolo = 0
-            //         }
-            //         yolo += 1;
-
-
-
-            //     }
-            // })
         };
 
         if (textTrack[0] !== undefined) {

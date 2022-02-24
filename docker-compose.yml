@@ -1,0 +1,14 @@
+# docker-compose run --rm player 
+
+services:
+  player:
+    image: node:14
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true  
+    volumes:
+      - .:/player
+    container_name: player
+    working_dir: /player
+    entrypoint: /bin/bash
