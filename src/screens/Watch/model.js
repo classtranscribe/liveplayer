@@ -93,6 +93,7 @@ const initState = {
     modal: MODAL_HIDE,
     liveMode: false,
     englishTrack: undefined,
+    descriptionTrack: undefined,
     currentAudioTrack: 0,
     audioTracks: undefined,
 
