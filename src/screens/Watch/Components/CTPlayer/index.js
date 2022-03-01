@@ -4,6 +4,8 @@ import { isMobile } from 'react-device-detect';
 import PlayerData from '../../player'
 import Video from './player'
 import VideoHls from './player_hls'
+import { useSpeechSynthesis } from 'react-speech-kit';
+
 import {
   PRIMARY,
   SECONDARY,
@@ -16,11 +18,13 @@ import './index.scss';
 import './playerModes_liveplayer.scss';
 // import './playerModes.css';
 
+
 const videoRef1 = (node) => { PlayerData.video1 = node };
 const videoRef2 = (node) => { PlayerData.video2 = node };
 const ClassTranscribePlayerNew = (props) => {
+  const { speak } = useSpeechSynthesis();
   const { dispatch } = props;
-  const { transView, muted, volume, playbackrate, openCC, updating, englishTrack } = props;
+  const { transView, muted, volume, playbackrate, openCC, updating, englishTrack, descriptionTrack } = props;
   const { media = {}, mode, isSwitched, isFullscreen, embedded, captionSpeedUp } = props;
   const { videos = [], isTwoScreen } = media;
   const { srcPath1, srcPath2, useHls = false} = videos[0] || {};
@@ -61,6 +65,8 @@ const ClassTranscribePlayerNew = (props) => {
     }
   }, [isTwoScreen])
   let [previousTrack, setPreviousTrack] = useState(undefined);
+  let [previousDescriptionTrack, setPreviousDescriptionTrack]  = useState(undefined);
+
   let thisIsTheWorst = function(event) {
     // 
     const toLog = [];
@@ -84,16 +90,9 @@ const ClassTranscribePlayerNew = (props) => {
         toCopy.startTime = curr.startTime;
         toCopy.endTime = curr.endTime;
         toCopy.text = curr.text;
-
-
-            // transcript.push(f)
-            // y
-            dispatch({ type: 'watch/setTranscript', payload:  toLog})
-
+        dispatch({ type: 'watch/setTranscript', payload:  toLog})
             
-            dispatch({ type: 'watch/setCurrCaption', payload:  toCopy})
-            
-            // splitter(toLog)
+        dispatch({ type: 'watch/setCurrCaption', payload:  toCopy});
     }
 }
 
@@ -109,6 +108,25 @@ const ClassTranscribePlayerNew = (props) => {
     }
   }, [englishTrack])
 
+  let descriptionTrackGlue = function(event) {
+    // based on thisIsTheWorst
+      for (let z = 0; z < event.currentTarget.cues.length; z += 1) {
+        let text = event.currentTarget.cues[z].text;
+        speak({text: text});
+    }
+  }
+  useEffect(() => {
+    if (previousDescriptionTrack !== undefined) {
+      previousDescriptionTrack.removeEventListener('cuechange', descriptionTrackGlue);
+      previousDescriptionTrack.mode = 'disabled';
+    }
+    if (descriptionTrack !== undefined) {
+      descriptionTrack.mode = 'hidden';
+      descriptionTrack.addEventListener("cuechange", descriptionTrackGlue );
+      setPreviousDescriptionTrack(descriptionTrack);
+    }
+  }, [descriptionTrack])
+  
 
   const media1Prop = {
     id: 1,
@@ -174,9 +192,9 @@ const ClassTranscribePlayerNew = (props) => {
 };
 
 export const ClassTranscribePlayer = connect(({ watch: {
-  media, mode, isSwitched, isFullscreen, embedded, updating, captionSpeedUp, englishTrack
+  media, mode, isSwitched, isFullscreen, embedded, updating, captionSpeedUp, englishTrack,descriptionTrack
 }, playerpref: {
   transView, muted, volume, playbackrate, openCC
 }, loading }) => ({
-  media, mode, isSwitched, isFullscreen, embedded, transView, muted, volume, playbackrate, openCC, updating, captionSpeedUp, englishTrack
+  media, mode, isSwitched, isFullscreen, embedded, transView, muted, volume, playbackrate, openCC, updating, captionSpeedUp, englishTrack,descriptionTrack
 }))(ClassTranscribePlayerNew);
