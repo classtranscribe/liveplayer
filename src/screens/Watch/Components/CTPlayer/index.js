@@ -112,7 +112,10 @@ const ClassTranscribePlayerNew = (props) => {
     // based on thisIsTheWorst
       for (let z = 0; z < event.currentTarget.cues.length; z += 1) {
         let text = event.currentTarget.cues[z].text;
-        speak({text: text});
+        if(window.location.href.includes("tts-expt")) {
+
+          speak({text: text});
+        }
     }
   }
   useEffect(() => {
