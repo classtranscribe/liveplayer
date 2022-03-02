@@ -1,4 +1,3 @@
-import { env } from 'utils/env';
 import { uurl } from './use-url';
 
 

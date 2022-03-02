@@ -13,7 +13,7 @@ import {
 } from './Utils';
 // import { uEvent } from './Utils/UserEventController';
 import { LINE_VIEW, TRANSCRIPT_VIEW, SEARCH_TRANS_IN_VIDEO } from './Utils/constants.util';
-
+/* eslint-disable no-unused-vars */
 function storageAvailable(type) {
     let storage;
     try {

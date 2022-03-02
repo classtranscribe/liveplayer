@@ -1,10 +1,11 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { connect } from 'dva'
 import { isMobile } from 'react-device-detect';
+import { useSpeechSynthesis } from 'react-speech-kit';
+
 import PlayerData from '../../player'
 import Video from './player'
 import VideoHls from './player_hls'
-import { useSpeechSynthesis } from 'react-speech-kit';
 
 import {
   PRIMARY,
@@ -65,7 +66,7 @@ const ClassTranscribePlayerNew = (props) => {
     }
   }, [isTwoScreen])
   let [previousTrack, setPreviousTrack] = useState(undefined);
-  let [previousDescriptionTrack, setPreviousDescriptionTrack]  = useState(undefined);
+  let [previousDescriptionTrack, setPreviousDescriptionTrack] = useState(undefined);
 
   let thisIsTheWorst = function(event) {
     // 
@@ -111,10 +112,9 @@ const ClassTranscribePlayerNew = (props) => {
   let descriptionTrackGlue = function(event) {
     // based on thisIsTheWorst
       for (let z = 0; z < event.currentTarget.cues.length; z += 1) {
-        let text = event.currentTarget.cues[z].text;
+        let thetext = event.currentTarget.cues[z].text;
         if(window.location.href.includes("tts-expt")) {
-
-          speak({text: text});
+          speak({text: thetext});
         }
     }
   }

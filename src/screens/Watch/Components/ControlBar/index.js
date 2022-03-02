@@ -5,8 +5,8 @@ import './index.scss';
 
 import {
   PlayButton,
-  RewindButton,
-  ForwardButton,
+//  RewindButton,
+//  ForwardButton,
   SettingButton,
   FullscreenButton,
   SwitchScreenButton,
