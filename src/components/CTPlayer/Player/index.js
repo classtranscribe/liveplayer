@@ -104,11 +104,11 @@ function Player(props) {
         )
     }
     return (
-        <div
-          className={`ctp ct-player-con${device}`}
-          onKeyDown={onKeyDown}
-          tabIndex="0"
-        >
+      <div
+        className={`ctp ct-player-con${device}`}
+        onKeyDown={onKeyDown}
+        tabIndex="0"
+      >
         <div
           className="ctp ct-player lg fill"
         >
