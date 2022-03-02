@@ -198,6 +198,7 @@ const Video = React.memo((props) => {
                             setCTPEvent(CTP_ERROR);
                             dispatch({type: 'watch/setTranscript', payload: ARRAY_EMPTY})
                             hls.startLoad();
+                            window.setTimeout(function(){window.location.reload()},(10000 + (Math.floor(Math.random() * 10) + 1)))
                             break;
                         case Hls.ErrorTypes.MEDIA_ERROR:
                             setCTPEvent(CTP_ERROR);
@@ -331,15 +332,20 @@ const Video = React.memo((props) => {
             dispatch({ type: 'watch/setTextTracks', payload: tracks });
 
             let foundCaptions = false;
+            console.log(`total tracks: ${tracks.length}`);
             for (var i = 0; i < tracks.length; i += 1) {
+                console.log(`track ${i + 1}: ` + tracks[i]["label"]);
                 if(  tracks[i].language.toLowerCase().startsWith("en") 
-                || i == tracks.length -1) {
-                    if(! foundCaptions) {
+                || tracks[i]["label"] === "Unknown CC") {
+                    if(! foundCaptions && tracks[i].language.toLowerCase().startsWith("en")) {
                         dispatch({ type: "watch/setEnglishTrack", payload: i });
                         tracks[i].mode = "showing";
                         foundCaptions = true;
                     }
-                    dispatch({ type: "watch/setDescriptionTrack", payload: i });
+                    if (tracks[i]["label"] === "Unknown CC") {
+                        tracks[i].mode = "showing";
+                        dispatch({ type: "watch/setDescriptionTrack", payload: i });
+                    }
                 }
             }
         };
