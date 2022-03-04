@@ -20,7 +20,11 @@
     "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\""
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "indent": ["warn", 2, { "ignoredNodes": ["JSXElement *"] }],
+      "react/jsx-indent": ["warn", 2]
+    }
   },
   "browserslist": {
     "production": [
