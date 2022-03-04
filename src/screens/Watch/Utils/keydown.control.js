@@ -13,7 +13,7 @@ import {
   MENU_SHORTCUTS,
   MENU_HIDE,
 } from './constants.util';
-
+/* eslint-disable complexity */
 export const keydownControl = {
   addedKeyDownListener: false,
 

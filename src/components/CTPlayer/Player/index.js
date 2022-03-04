@@ -116,7 +116,7 @@ function Player(props) {
           <Wrapper screenshotActionElement={screenshotActionElement} />
         </div>
       </div>
-  )
+    )
 }
 export default connect(({
     watch: { error, isFullscreen }

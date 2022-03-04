@@ -93,9 +93,12 @@ const initState = {
     modal: MODAL_HIDE,
     liveMode: false,
     englishTrack: undefined,
+    descriptionTrack: undefined,
     currentAudioTrack: 0,
     audioTracks: undefined,
 
+    // text descriptions of visual information
+    description: undefined,
     // Others
     prompt: null,
     search: SEARCH_INIT,
@@ -270,10 +273,12 @@ const WatchModel = {
                 
             }
             let currTrack = document.getElementsByTagName('video')[0].textTracks;
-            
-            
 
             return { ...state, englishTrack: currTrack[payload], transcript: []};
+        },
+        setDescriptionTrack(state, { payload }) {
+            let currTrack = document.getElementsByTagName('video')[0].textTracks;
+            return { ...state, descriptionTrack: currTrack[payload], description: []};
         },
 
         setFullscreen(state, { payload }) {

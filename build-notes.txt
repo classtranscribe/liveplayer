@@ -1,0 +1,19 @@
+node:14 and node:
+
+Try using node:17
+
+Error: error:0308010C:digital envelope routines::unsupported with node17 (after removing node-sass and adding sass to dev)
+https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported
+.. known issue with open ssl
+
+so back to LTS - node:16.13 ....
+
+yarn build
+./src/screens/Watch/livetest.scss
+To import Sass files, you first need to install node-sass.
+Run `npm install node-sass` or `yarn add node-sass` inside your workspace.
+Require stack:
+- /player/node_modules/sass-loader/lib/loader.js
+
+
+node 15 works
