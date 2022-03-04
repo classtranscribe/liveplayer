@@ -111,8 +111,8 @@ const ClassTranscribePlayerNew = (props) => {
 
   let descriptionTrackGlue = function(event) {
     // based on thisIsTheWorst
-      for (let z = 0; z < event.currentTarget.cues.length; z += 1) {
-        let thetext = event.currentTarget.cues[z].text;
+      for (let z = 0; z < event.currentTarget.activeCues.length; z += 1) {
+        let thetext = event.currentTarget.activeCues[z].text;
         if(window.location.href.includes("tts-expt")) {
           speak({text: thetext});
         }
