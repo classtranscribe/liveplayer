@@ -109,14 +109,22 @@ const ClassTranscribePlayerNew = (props) => {
     }
   }, [englishTrack])
 
-  let descriptionTrackGlue = function(event) {
-    // based on thisIsTheWorst
-      for (let z = 0; z < event.currentTarget.activeCues.length; z += 1) {
-        let thetext = event.currentTarget.activeCues[z].text;
-        if(window.location.href.includes("tts-expt")) {
-          speak({text: thetext});
+  let previouslySpokenDescriptionCue = Set()
+
+  let descriptionTrackGlue = function(event) { 
+      let activeCues = event.currentTarget.activeCues;
+      let newKeys = Set();
+      for (let z = 0; z < activeCues.length; z += 1) {
+        let thetext = activeCues[z].text;
+        let key = `starttime:{thetext}` // Todo: add activeCues[z].starttimeitem
+        newKeys.add(key);
+        if(! previouslySpokenDescriptionCue.has(key) ) {
+          if(window.location.href.includes("tts-expt")) {
+            speak({text: thetext});
+          }
         }
-    }
+      }
+      previouslySpokenDescriptionCue = newKeys;
   }
   useEffect(() => {
     if (previousDescriptionTrack !== undefined) {
