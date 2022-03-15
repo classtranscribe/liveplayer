@@ -109,11 +109,11 @@ const ClassTranscribePlayerNew = (props) => {
     }
   }, [englishTrack])
 
-  let previouslySpokenDescriptionCue = Set()
+  let previouslySpokenDescriptionCue = new Set()
 
   let descriptionTrackGlue = function(event) { 
       let activeCues = event.currentTarget.activeCues;
-      let newKeys = Set();
+      let newKeys = new Set();
       for (let z = 0; z < activeCues.length; z += 1) {
         let thetext = activeCues[z].text;
         let key = `starttime:{thetext}` // Todo: add activeCues[z].starttimeitem
