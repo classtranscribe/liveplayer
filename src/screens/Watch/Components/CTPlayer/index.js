@@ -30,18 +30,25 @@ const ClassTranscribePlayerNew = (props) => {
   const { srcPath1, srcPath2, useHls = false} = videos[0] || {};
 
   let pauseCount = 0;
+  let wasPaused = false;
 
   const decrementPauseCount = () => {
     if (pauseCount < 1) return;
     pauseCount -= 1;
-    if(pauseCount === 0) {
-// todo toreview: use react to call play
+    console.log(`decrementPauseCount. pauseCount now ${pauseCount}, wasPaused is ${wasPaused}`);
+    if(pauseCount === 0 && ! wasPaused) {
+// todo toreview: use react to call play indirectly?
       PlayerData.video1 && PlayerData.video1.play();
       PlayerData.video2 && PlayerData.video2.play();
     }
   }
   const incrementPauseCount = () => {
 // todo toreview: use react way to call pause
+    if(PlayerData.video1 && pauseCount === 0  ) {
+      wasPaused = PlayerData.video1.paused; 
+      // fixme this is always false, even when the player is paused
+      // console.log(`wasPaused set to ${wasPaused}`);
+    }
     pauseCount += 1
     PlayerData.video1 && PlayerData.video1.pause();
     PlayerData.video2 && PlayerData.video2.pause();
@@ -93,44 +100,46 @@ const ClassTranscribePlayerNew = (props) => {
   }, [isTwoScreen])
   let [previousTrack, setPreviousTrack] = useState(undefined);
   let [previousDescriptionTrack, setPreviousDescriptionTrack] = useState(undefined);
-
-  let thisIsTheWorst = function(event) {
+  // not react glue formerly "thisIsTheWorst"
+  let captionReactGlue = function(event) {
     // 
     const toLog = [];
     for (let z = 0; z < event.currentTarget.cues.length; z += 1) {
-        let toCopy = JSON.parse(JSON.stringify(event.currentTarget.cues[z]));
-        toCopy.startTime = event.currentTarget.cues[z].startTime;
-        toCopy.endTime = event.currentTarget.cues[z].endTime;
-        toCopy.text = event.currentTarget.cues[z].text;
-        toCopy.kind = 'vtt'
-        toLog.push(toCopy)
+        const cue =  event.currentTarget.cues[z];
+        if(cue === undefined || cue.startTime === undefined) {
+          // eslint-disable-next-line 
+          console.log(`Skipping cue ${cue}`);
+          continue;
+        }
+        const aCopy = { kind:'vtt',startTime:String(cue.startTime), endTime:String(cue.endTime), text:cue.text};
+        toLog.push(aCopy)
     }
     
     // const prev = undefined;
     if (event.currentTarget.activeCues[0] !== undefined) {
         let curr = event.currentTarget.activeCues[0];
-        if (Math.abs(curr.startTime - curr.endTime) > 20) {
+        if (curr.startTime !== undefined && event.currentTarget.activeCues[1] !== undefined 
+          && Math.abs(curr.startTime - curr.endTime) > 20) {
             curr = event.currentTarget.activeCues[1];
         }
-
-        let toCopy = JSON.parse(JSON.stringify(curr));
-        toCopy.startTime = curr.startTime;
-        toCopy.endTime = curr.endTime;
-        toCopy.text = curr.text;
-        dispatch({ type: 'watch/setTranscript', payload:  toLog})
+                
+        const aCopy = { startTime:String(curr.startTime), endTime:String(curr.endTime), text:curr.text };
+        // eslint-disable-next-line 
+        console.log(`Cue copy: ${aCopy.startTime}`);
+        dispatch({ type: 'watch/setTranscript', payload:  toLog});
             
-        dispatch({ type: 'watch/setCurrCaption', payload:  toCopy});
+        dispatch({ type: 'watch/setCurrCaption', payload:  aCopy});
     }
 }
 
   useEffect(() => {
     if (previousTrack !== undefined) {
-      previousTrack.removeEventListener('cuechange', thisIsTheWorst);
+      previousTrack.removeEventListener('cuechange', captionReactGlue);
       previousTrack.mode = 'disabled';
     }
     if (englishTrack !== undefined) {
       englishTrack.mode = 'hidden';
-      englishTrack.addEventListener("cuechange", thisIsTheWorst );
+      englishTrack.addEventListener("cuechange", captionReactGlue );
       setPreviousTrack(englishTrack);
     }
   }, [englishTrack])
@@ -140,17 +149,32 @@ const ClassTranscribePlayerNew = (props) => {
   let descriptionTrackGlue = function(event) { 
       let activeCues = event.currentTarget.activeCues;
       let newKeys = new Set();
+      let wordsToSpeak = [];
       for (let z = 0; z < activeCues.length; z += 1) {
-        let thetext = activeCues[z].text;
-        let startTime = String(activeCues[z].startTime);
-        let key = `{startTime}:{thetext}` 
+        const cue = activeCues[z];
+        if(cue === undefined || cue.startTime === undefined) {
+          continue;
+        }
+        let thetext = cue.text;
+        let startTime = String(cue.startTime);
+        let key = `${thetext}`; // Do not add the startime - this can change
         newKeys.add(key);
         if(! previouslySpokenDescriptionCue.has(key) ) {
-          if(window.location.href.includes("tts")) {
-            incrementPauseCount();
-            speak({text: thetext});
+          if(window.location.hash.includes("ad") || window.location.hash.includes("tts")) {
+            // eslint-disable-next-line 
+            console.log(`Speaking ${startTime}:${thetext}`);
+            wordsToSpeak.push(thetext);
           }
+        } else {
+          // eslint-disable-next-line 
+          console.log(`Already spoken ${key}`);
         }
+      }
+      
+      const allwords = wordsToSpeak.join(' ').trim();
+      if(allwords.length > 0) {
+        incrementPauseCount();
+        speak({text: allwords});
       }
       previouslySpokenDescriptionCue = newKeys;
   }
