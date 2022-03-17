@@ -23,12 +23,38 @@ import './playerModes_liveplayer.scss';
 const videoRef1 = (node) => { PlayerData.video1 = node };
 const videoRef2 = (node) => { PlayerData.video2 = node };
 const ClassTranscribePlayerNew = (props) => {
-  const { speak } = useSpeechSynthesis();
   const { dispatch } = props;
   const { transView, muted, volume, playbackrate, openCC, updating, englishTrack, descriptionTrack } = props;
   const { media = {}, mode, isSwitched, isFullscreen, embedded, captionSpeedUp } = props;
   const { videos = [], isTwoScreen } = media;
   const { srcPath1, srcPath2, useHls = false} = videos[0] || {};
+
+  let pauseCount = 0;
+
+  const decrementPauseCount = () => {
+    if (pauseCount < 1) return;
+    pauseCount -= 1;
+    if(pauseCount === 0) {
+// todo toreview: use react to call play
+      PlayerData.video1 && PlayerData.video1.play();
+      PlayerData.video2 && PlayerData.video2.play();
+    }
+  }
+  const incrementPauseCount = () => {
+// todo toreview: use react way to call pause
+    pauseCount += 1
+    PlayerData.video1 && PlayerData.video1.pause();
+    PlayerData.video2 && PlayerData.video2.pause();
+  }
+
+  const onEnd = () => {
+    decrementPauseCount();
+  };
+  const { speak, supported, voices } = useSpeechSynthesis({
+    onEnd,
+  });
+
+  
   // Mute Handler
   useEffect(() => {
     PlayerData.video1 && (PlayerData.video1.muted = muted);
@@ -116,10 +142,12 @@ const ClassTranscribePlayerNew = (props) => {
       let newKeys = new Set();
       for (let z = 0; z < activeCues.length; z += 1) {
         let thetext = activeCues[z].text;
-        let key = `starttime:{thetext}` // Todo: add activeCues[z].starttimeitem
+        let startTime = String(activeCues[z].startTime);
+        let key = `{startTime}:{thetext}` 
         newKeys.add(key);
         if(! previouslySpokenDescriptionCue.has(key) ) {
-          if(window.location.href.includes("tts-expt")) {
+          if(window.location.href.includes("tts")) {
+            incrementPauseCount();
             speak({text: thetext});
           }
         }
