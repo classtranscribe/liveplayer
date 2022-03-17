@@ -35,6 +35,7 @@ const ClassTranscribePlayerNew = (props) => {
   const decrementPauseCount = () => {
     if (pauseCount < 1) return;
     pauseCount -= 1;
+    // eslint-disable-next-line 
     console.log(`decrementPauseCount. pauseCount now ${pauseCount}, wasPaused is ${wasPaused}`);
     if(pauseCount === 0 && ! wasPaused) {
 // todo toreview: use react to call play indirectly?
@@ -43,8 +44,8 @@ const ClassTranscribePlayerNew = (props) => {
     }
   }
   const incrementPauseCount = () => {
-// todo toreview: use react way to call pause
-    if(PlayerData.video1 && pauseCount === 0  ) {
+    // todo toreview: use react way to call pause
+    if(PlayerData.video1 && pauseCount === 0 ) {
       wasPaused = PlayerData.video1.paused; 
       // fixme this is always false, even when the player is paused
       // console.log(`wasPaused set to ${wasPaused}`);
@@ -105,10 +106,11 @@ const ClassTranscribePlayerNew = (props) => {
     // 
     const toLog = [];
     for (let z = 0; z < event.currentTarget.cues.length; z += 1) {
-        const cue =  event.currentTarget.cues[z];
+        const cue = event.currentTarget.cues[z];
         if(cue === undefined || cue.startTime === undefined) {
           // eslint-disable-next-line 
           console.log(`Skipping cue ${cue}`);
+          // eslint-disable-next-line 
           continue;
         }
         const aCopy = { kind:'vtt',startTime:String(cue.startTime), endTime:String(cue.endTime), text:cue.text};
@@ -153,6 +155,7 @@ const ClassTranscribePlayerNew = (props) => {
       for (let z = 0; z < activeCues.length; z += 1) {
         const cue = activeCues[z];
         if(cue === undefined || cue.startTime === undefined) {
+          // eslint-disable-next-line 
           continue;
         }
         let thetext = cue.text;
