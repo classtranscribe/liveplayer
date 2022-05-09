@@ -14,7 +14,7 @@ export function TTSExample() {
         value={value}
         onChange={(event) => setValue(event.target.value)}
       />
-      <button onClick={() => speak({ text: value })}>Speak</button>
+      <button onClick={() => speak({text: value, volume: 0.7, rate: 1.1})}>Speak</button>
     </div>
   );
  };

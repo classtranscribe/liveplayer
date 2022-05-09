@@ -177,7 +177,7 @@ const ClassTranscribePlayerNew = (props) => {
       const allwords = wordsToSpeak.join(' ').trim();
       if(allwords.length > 0) {
         incrementPauseCount();
-        speak({text: allwords});
+        speak({text: allwords, volume: 0.7, rate: 1.1});
       }
       previouslySpokenDescriptionCue = newKeys;
   }
