@@ -1,5 +1,3 @@
-# ClassTranscribe Front-End Liveplayer
+# ClassTranscribe Liveplayer
 
-The React.js Frontend for ClassTranscribe LivePlayer
-
-Copyright 2019-2021 University of Illinois, USA
+Copyright 2019-2022 University of Illinois, USA
